@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
+import { CreateMovieDTO } from './dto/create-movie.dto';
 
 @Controller('movies') // router: /movies
 export class MoviesController {
@@ -27,23 +28,23 @@ export class MoviesController {
   // 아래 Get보다 위에 있어야 /search 작동
 
   @Get('/:id') // If you want somethig, you have to ask for it.
-  getOne(@Param('id') movieId: string): Movie {
+  getOne(@Param('id') movieId: number): Movie {
     return this.moviesService.getOne(movieId);
   }
 
   @Post()
-  crate(@Body() movieData) {
+  crate(@Body() movieData: CreateMovieDTO) {
     // console.log(movieData)
     return this.moviesService.create(movieData);
   }
 
   @Delete('/:id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.moviesService.deleteOne(movieId);
   }
 
   @Patch('/:id')
-  patch(@Param('id') movieId: string, @Body() updateData) {
+  patch(@Param('id') movieId: number, @Body() updateData: CreateMovieDTO) {
     return this.moviesService.update(movieId, updateData);
   }
 }
